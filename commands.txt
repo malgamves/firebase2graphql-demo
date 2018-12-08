@@ -1,0 +1,3 @@
+alter table public.names drop constraint names_pkey;
+
+alter table public.names add constraint names_pkey primary key ("_id");
