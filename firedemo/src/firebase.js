@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase';
 
 const app = initializeApp({
-    apiKey: "AIzaSyDx6YCpRw3YRCBBn8aXaP3gEyg5JWF8uPM",
-    authDomain: "fir-vue-94919.firebaseapp.com",
-    databaseURL: "https://fir-vue-94919.firebaseio.com",
-    projectId: "fir-vue-94919",
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
     storageBucket: "",
-    messagingSenderId: "865318825386"
+    messagingSenderId: "Key"
   });
 
   export const db = app.database();
