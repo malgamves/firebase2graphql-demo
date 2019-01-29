@@ -9,8 +9,16 @@
         <ul>
           <li v-for="personName of names" 
           v-bind:key="personName._id">
-          <p>{{personName.name}}</p>
-          <button @click="removeName(personName._id)">Remove</button>
+            <div v-if="!personName.edit">
+              <p>{{personName.name}}</p>
+              <button @click="removeName(personName._id)">Remove</button>
+              <button @click="setEditName(personName._id)">Edit</button>
+            </div>
+            <div v-else>
+              <input type="text" v-modal="personName.name">
+              <button @click="saveEdit(personName)">Save</button>
+              <button @click="cancelEdit(personName._id)">Cancel</button>
+            </div>
           </li>
         </ul>
       </div>
@@ -21,6 +29,9 @@
 import { ALL_NAMES_QUERY } from '../constants/graphql'
 import { DELETE_NAME_MUTATION } from '../constants/graphql'
 import { ADD_NAME_MUTATION } from '../constants/graphql'
+import { SET_EDIT_MUTATION} from '../constants/graphql'
+import { CANCEL_EDIT_MUTATION} from '../constants/graphql'
+import { SAVE_EDIT_MUTATION} from '../constants/graphql'
 import random from 'random-key-generator'
 
 
@@ -56,6 +67,40 @@ export default {
         // Parameters
         variables: {
           _id: id
+        }
+      });
+    },
+    setEditName(id){
+      this.$apollo.mutate({
+        // Mutation
+        mutation: SET_EDIT_MUTATION,
+        // Parameters
+        variables: {
+          _id: id,
+          edit: true,
+        }
+      });
+    },
+    cancelEdit(id) {
+this.$apollo.mutate({
+        // Mutation
+        mutation: CANCEL_EDIT_MUTATION,
+        // Parameters
+        variables: {
+          _id: id,
+          edit: false,
+        }
+      });
+    },
+    saveEdit(name) {
+this.$apollo.mutate({
+        // Mutation
+        mutation: SAVE_EDIT_MUTATION,
+        // Parameters
+        variables: {
+          _id: name.id,
+          name: name.name,
+          edit: false,
         }
       });
     },

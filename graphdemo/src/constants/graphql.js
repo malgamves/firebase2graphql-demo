@@ -25,6 +25,46 @@ export const ADD_NAME_MUTATION = gql`
     }
 `;
 
+export const SET_EDIT_MUTATION = gql`
+    mutation setEditName($edit: Boolean!, $_id: String!){
+  update_names(where: {_id: {_eq: $_id }}, 
+  _set: {
+    edit: true
+  }) 
+  {
+    affected_rows
+  }
+
+    }
+`;
+
+export const CANCEL_EDIT_MUTATION = gql`
+    mutation cancelName($edit: Boolean!, $_id: String!){
+  update_names(where: {_id: {_eq: $_id }}, 
+  _set: {
+    edit: false
+  }) 
+  {
+    affected_rows
+  }
+
+    }
+`;
+
+export const SAVE_EDIT_MUTATION = gql`
+    mutation saveName($edit: Boolean!, $_id: String!, $name: String!){
+  update_names(where: {_id: {_eq: $_id }}, 
+  _set: {
+    edit: false,
+    name: $name,
+  }) 
+  {
+    affected_rows
+  }
+
+    }
+`;
+
 export const UPDATE_SUBSCRIPTION = gql`
 subscription names {
     names {

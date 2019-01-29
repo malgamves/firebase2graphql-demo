@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: 'Add your endpoint here'
+  uri: 'http://139.59.1.103/v1alpha1/graphql'
 })
 
 const apolloClient = new ApolloClient({
