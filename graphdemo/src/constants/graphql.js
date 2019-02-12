@@ -65,11 +65,11 @@ export const SAVE_EDIT_MUTATION = gql`
     }
 `;
 
-export const UPDATE_SUBSCRIPTION = gql`
-subscription names {
+export const ALL_NAMES_SUBSCRIPTION = gql`
+  subscription namesSubscription {
     names {
-      _id
-      name
+        _id
+        name
     }
   }
 `;

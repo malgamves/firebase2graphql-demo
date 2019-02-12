@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import { ALL_NAMES_QUERY } from '../constants/graphql'
+import { ALL_NAMES_QUERY} from '../constants/graphql'
+import { ALL_NAMES_SUBSCRIPTION } from '../constants/graphql'
 import { DELETE_NAME_MUTATION } from '../constants/graphql'
 import { ADD_NAME_MUTATION } from '../constants/graphql'
 import { SET_EDIT_MUTATION} from '../constants/graphql'
@@ -108,6 +109,14 @@ this.$apollo.mutate({
   apollo: {
       names: {
         query: ALL_NAMES_QUERY,
+        subscribeToMore: {
+          document: ALL_NAMES_SUBSCRIPTION,
+          updateQuery: (previousData, { subscriptionData }) => {
+            return {
+              names: [...previousData.names, subscriptionData.data.names],
+            };
+          },
+        },
       }
     }
 }

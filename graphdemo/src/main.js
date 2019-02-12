@@ -1,6 +1,9 @@
 import { ApolloClient } from 'apollo-client'
-import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache } from 'apollo-cache-inmemory'
+import { WebSocketLink } from 'apollo-link-ws';
+import { HttpLink } from 'apollo-link-http';
+import { split } from 'apollo-link';
+import { getMainDefinition } from 'apollo-utilities';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 
@@ -11,10 +14,28 @@ Vue.config.productionTip = false
 const httpLink = new HttpLink({
   // You should use an absolute URL here
   uri: 'http://139.59.1.103/v1alpha1/graphql'
-})
+});
+
+const wsLink = new WebSocketLink({
+  uri: "ws://139.59.1.103/v1alpha1/graphql",
+  options: {
+    reconnect: true
+  }
+});
+
+const link = split(
+  // split based on operation type
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+    return kind === 'OperationDefinition' && operation === 'subscription';
+  },
+  wsLink,
+  httpLink,
+);
+
 
 const apolloClient = new ApolloClient({
-  link: httpLink,
+  link,
   cache: new InMemoryCache(),
   connectToDevTools: true
 })
