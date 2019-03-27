@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const ALL_NAMES_QUERY = gql`
-  query names {
+  subscription names {
     names {
         _id
         name
