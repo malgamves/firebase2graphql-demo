@@ -13,11 +13,11 @@ Vue.config.productionTip = false
 
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: 'http://139.59.1.103/v1alpha1/graphql'
+  uri: 'http://134.209.146.3/v1alpha1/graphql'
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://139.59.1.103/v1alpha1/graphql",
+  uri: "ws://134.209.146.3/v1alpha1/graphql",
   options: {
     reconnect: true
   }
